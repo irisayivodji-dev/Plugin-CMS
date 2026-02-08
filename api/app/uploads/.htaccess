@@ -1,0 +1,9 @@
+# Empêcher l'exécution de scripts PHP dans le dossier uploads
+<FilesMatch "\.php$">
+    Deny from all
+</FilesMatch>
+
+# Autoriser uniquement certains types de fichiers
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|mp4|webm|pdf|mp3|wav)$">
+    Allow from all
+</FilesMatch>

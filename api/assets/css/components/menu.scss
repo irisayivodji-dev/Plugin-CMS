@@ -1,0 +1,46 @@
+@use "sass:map";
+@use "../partials/variables" as v;
+@use "../partials/functions" as f;
+@use "../partials/globals" as g;
+
+@layer components {
+    .menu {
+        list-style: none;
+        margin: 0;
+        padding: f.rem(20);
+        border-radius: f.rem(6);
+        display: flex;
+        flex-direction: column;
+        width: f.rem(216);
+        gap: f.rem(16);
+        box-shadow: 0 4px 6px var(--shadow-color);
+        
+        &__item {
+            display: block;
+        }
+        
+        &__link {
+            display: block;
+            padding: f.rem(16) f.rem(8);
+            font-size: f.rem(14);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 400;
+            border-radius: f.rem(6);
+            margin-block: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        @each $name, $color in v.$agnostic {
+            &--#{$name} {
+                .menu__link {
+                    color: $color;
+                    &--active {
+                        background-color: $color;
+                        color: map.get(v.$colors, 'white');
+                    }
+                }
+            }
+        }
+    }
+}

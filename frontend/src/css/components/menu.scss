@@ -1,0 +1,58 @@
+@use "../partials/variables" as v;
+@use "../partials/functions" as f;
+@use "../partials/globals" as g;
+@use "sass:color";
+@use "sass:map";
+
+@layer components {
+    .menu {
+        list-style: none;
+        margin: 0;
+        padding: f.rem(16);
+        border-radius: f.rem(6);
+        display: flex;
+        flex-direction: column;
+        width: f.rem(216);
+        box-shadow: 0 4px 6px var(--shadow-color);
+        
+        &__item {
+            display: block;
+        }
+        
+        &__link {
+            display: block;
+            padding: f.rem(16) f.rem(8);
+            font-size: f.rem(14);
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 400;
+            border-radius: f.rem(6);
+            margin-block: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        @each $name, $color in v.$agnostic {
+            &--#{$name} {
+                .menu__link {
+                    color: var(--text-color);
+                    &--active {
+                        background-color: $color;
+                        @if $color == map.get(v.$colors, 'light-grey') {
+                            color: var(--text-color);
+                        } @else {
+                            color: map.get(v.$colors, 'white');
+                        }
+                    }
+                    &:hover{
+                        background-color: $color;
+                        @if $color == map.get(v.$colors, 'light-grey') {
+                            color: var(--text-color);
+                        } @else {
+                            color: map.get(v.$colors, 'white');
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

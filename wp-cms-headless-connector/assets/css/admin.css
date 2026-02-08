@@ -1,0 +1,231 @@
+.wp-cms-connector-admin {
+    max-width: 960px;
+    margin-top: 0;
+}
+
+.wp-cms-connector-admin .wrap {
+    padding: 0;
+}
+
+.wp-cms-connector-admin > h1 {
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0 0 1.5rem;
+    padding: 9px 0 4px;
+    line-height: 1.3;
+    color: #1d2327;
+    border-bottom: 1px solid #c3c4c7;
+    padding-bottom: 1rem;
+}
+
+/* Sections numérotées */
+.wp-cms-connector-section {
+    margin: 0 0 2rem;
+    padding: 0;
+}
+
+.wp-cms-connector-section-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+    padding: 0 0 0.5rem;
+    color: #1d2327;
+    border-bottom: 1px solid #dcdcde;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.wp-cms-connector-box {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    margin-bottom: 0.5rem;
+}
+
+.wp-cms-connector-box--success {
+    border-left: 4px solid #00a32a;
+    background: linear-gradient(to right, rgba(0, 163, 42, 0.03) 0%, transparent 8%);
+}
+
+/* Réglages : disposition en ligne lisible */
+.wp-cms-connector-settings-box .wp-cms-connector-form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem 1.5rem;
+}
+
+.wp-cms-connector-settings-box .wp-cms-connector-form-inline p {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.wp-cms-connector-settings-box .wp-cms-connector-form-inline label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #1d2327;
+}
+
+.wp-cms-connector-form p {
+    margin-bottom: 1.25rem;
+}
+
+.wp-cms-connector-form p:last-of-type {
+    margin-bottom: 0;
+}
+
+.wp-cms-connector-form label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    font-size: 13px;
+    color: #1d2327;
+}
+
+.wp-cms-connector-form input[type="text"],
+.wp-cms-connector-form input[type="password"],
+.wp-cms-connector-form input[type="url"],
+.wp-cms-connector-form input[type="number"] {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border-color: #8c8f94;
+}
+
+.wp-cms-connector-token-input {
+    width: 100%;
+    max-width: 420px;
+    background: #f0f0f1;
+    cursor: not-allowed;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 13px;
+}
+
+.wp-cms-connector-message {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.wp-cms-connector-message--success {
+    color: #00a32a;
+    font-weight: 500;
+}
+
+.wp-cms-connector-message--error {
+    color: #d63638;
+    font-weight: 500;
+}
+
+/* Tableau shortcodes */
+.wp-cms-connector-shortcodes-doc {
+    overflow-x: auto;
+    margin-top: 0.5rem;
+}
+
+.wp-cms-connector-table {
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.wp-cms-connector-table thead th {
+    background: #f6f7f7;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    border: 1px solid #c3c4c7;
+    border-bottom-width: 2px;
+}
+
+.wp-cms-connector-table tbody td {
+    padding: 10px 12px;
+    border: 1px solid #c3c4c7;
+    font-size: 13px;
+    vertical-align: top;
+}
+
+.wp-cms-connector-table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.wp-cms-connector-table tbody tr:hover {
+    background: #f0f6fc;
+}
+
+.wp-cms-connector-table code {
+    background: #f0f0f1;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    border: 1px solid #dcdcde;
+}
+
+.wp-cms-connector-table .ul-disc {
+    margin: 0.2em 0 0 1.2em;
+    padding: 0;
+    list-style: disc;
+}
+
+.wp-cms-connector-table .ul-disc li {
+    margin-bottom: 0.25em;
+}
+
+.wp-cms-connector-admin h3 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 1.25rem 0 0.5rem;
+    color: #1d2327;
+}
+
+.wp-cms-connector-admin h3:first-of-type {
+    margin-top: 0;
+}
+
+.wp-cms-connector-pre {
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.5;
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: Consolas, Monaco, monospace;
+    color: #1d2327;
+}
+
+.wp-cms-connector-error,
+.wp-cms-connector-notice {
+    color: #646970;
+    font-style: italic;
+    font-size: 13px;
+}
+
+.wp-cms-connector-box .description {
+    margin-bottom: 1rem;
+    color: #646970;
+    font-size: 13px;
+}
+
+/* Boutons alignés avec les messages */
+.wp-cms-connector-admin .button + .wp-cms-connector-message {
+    margin-left: 0.75rem;
+}
+
+@media screen and (max-width: 782px) {
+    .wp-cms-connector-admin {
+        max-width: 100%;
+    }
+
+    .wp-cms-connector-settings-box .wp-cms-connector-form-inline {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

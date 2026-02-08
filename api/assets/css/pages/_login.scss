@@ -1,0 +1,312 @@
+@use '../partials/variables';
+@use '../partials/mixins';
+@use "../partials/functions" as f;
+
+.login {
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: f.rem(20);
+
+  &__wrapper {
+    max-width: f.rem(1200);
+    width: 100%;
+    min-height: f.rem(600);
+    display: flex;
+    border-radius: f.rem(24);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  &__left {
+    flex: 1;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: f.rem(60);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+  }
+
+  &__brand {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+  }
+
+  &__logo {
+    width: f.rem(80);
+    height: f.rem(80);
+    margin: 0 auto f.rem(24);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: f.rem(20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    svg {
+      width: f.rem(40);
+      height: f.rem(40);
+      color: white;
+    }
+  }
+
+  &__brand-title {
+    font-size: f.rem(36);
+    font-weight: 700;
+    margin: 0 0 f.rem(12) 0;
+    letter-spacing: -0.5px;
+  }
+
+  &__brand-subtitle {
+    font-size: f.rem(18);
+    margin: 0;
+    opacity: 0.9;
+    font-weight: 400;
+  }
+
+  &__right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: f.rem(60);
+    background: #ffffff;
+  }
+
+  &__card {
+    width: 100%;
+    max-width: f.rem(440);
+    animation: fadeInUp 0.5s ease-out;
+  }
+
+  &__header {
+    margin-bottom: f.rem(32);
+  }
+
+  &__title {
+    font-size: f.rem(32);
+    font-weight: 700;
+    margin: 0 0 f.rem(8) 0;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+  }
+
+  &__subtitle {
+    font-size: f.rem(16);
+    color: #64748b;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  &__alert {
+    display: flex;
+    align-items: center;
+    gap: f.rem(12);
+    padding: f.rem(14) f.rem(16);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: f.rem(10);
+    color: #dc2626;
+    margin-bottom: f.rem(24);
+    font-size: f.rem(14);
+    animation: shake 0.4s ease-in-out;
+
+    svg {
+      width: f.rem(20);
+      height: f.rem(20);
+      flex-shrink: 0;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: f.rem(20);
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: f.rem(8);
+  }
+
+  &__label {
+    font-size: f.rem(14);
+    font-weight: 600;
+    color: #334155;
+    letter-spacing: 0.2px;
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    padding: f.rem(14) f.rem(16);
+    border: 2px solid #e2e8f0;
+    border-radius: f.rem(10);
+    font-size: f.rem(15);
+    background: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: #1e293b;
+
+    &:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+
+    &:hover:not(:focus) {
+      border-color: #cbd5e1;
+    }
+
+    &.error {
+      border-color: #ef4444;
+      
+      &:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 f.rem(3) rgba(239, 68, 68, 0.1);
+      }
+    }
+  }
+
+  &__error {
+    display: none;
+    color: #dc2626;
+    font-size: f.rem(13);
+    margin-top: f.rem(6);
+    animation: fadeIn 0.2s ease-in-out;
+
+    &.show {
+      display: block;
+    }
+  }
+
+  &__button {
+    margin-top: f.rem(8);
+    padding: f.rem(14) f.rem(24);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    border-radius: f.rem(10);
+    font-size: f.rem(16);
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 f.rem(4) f.rem(12) rgba(99, 102, 241, 0.3);
+    font-family: inherit;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 f.rem(6) f.rem(20) rgba(99, 102, 241, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(f.rem(20));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(f.rem(-8));
+  }
+  75% {
+    transform: translateX(f.rem(8));
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .login {
+    &__wrapper {
+      flex-direction: column;
+    }
+
+    &__left {
+      padding: f.rem(40) f.rem(20);
+      min-height: 40vh;
+    }
+
+    &__brand-title {
+      font-size: f.rem(28);
+    }
+
+    &__brand-subtitle {
+      font-size: f.rem(16);
+    }
+
+    &__logo {
+      width: f.rem(64);
+      height: f.rem(64);
+      margin-bottom: f.rem(20);
+
+      svg {
+        width: f.rem(32);
+        height: f.rem(32);
+      }
+    }
+
+    &__right {
+      padding: f.rem(40) f.rem(20);
+    }
+
+    &__card {
+      max-width: 100%;
+    }
+
+    &__header {
+      display: none;
+    }
+
+    &__title {
+      font-size: f.rem(28);
+    }
+
+    &__button {
+      text-align: center;
+    }
+  }
+}

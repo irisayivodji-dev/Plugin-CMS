@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier une catégorie - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <a href="/admin/categories" class="dashboard__back">Retour à la liste</a>
+        <div class="dashboard__header">
+            <h1 class="dashboard__title">Modifier une catégorie</h1>
+        </div>
+        <div class="dashboard__content">
+            <form method="POST" action="/admin/categories/edit/<?= htmlspecialchars($category->id) ?>" class="users__form">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                <input type="hidden" name="_method" value="PATCH">
+                
+                <?php if (isset($errors['csrf'])): ?>
+                    <div class="users__alert users__alert--error">
+                        <?= htmlspecialchars($errors['csrf']) ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="users__form-group">
+                    <label for="name" class="users__label">Nom <span class="users__required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        class="users__input <?= isset($errors['name']) ? 'users__input--error' : '' ?>"
+                        value="<?= htmlspecialchars($old['name'] ?? $category->name) ?>"
+                        maxlength="255"
+                        required
+                    >
+                    <?php if (isset($errors['name'])): ?>
+                        <span class="users__error"><?= htmlspecialchars($errors['name']) ?></span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="users__form-group">
+                    <label for="description" class="users__label">Description <span class="users__required">*</span></label>
+                    <textarea 
+                        id="description" 
+                        name="description" 
+                        class="users__input <?= isset($errors['description']) ? 'users__input--error' : '' ?>"
+                        rows="5"
+                        maxlength="1000"
+                        required
+                    ><?= htmlspecialchars($old['description'] ?? $category->description) ?></textarea>
+                    <?php if (isset($errors['description'])): ?>
+                        <span class="users__error"><?= htmlspecialchars($errors['description']) ?></span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="users__form-actions">
+                    <button type="submit" class="button button--indigo">
+                        <svg fill="#ffffff" width="18px" height="18px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Save_Down_1" data-name="Save Down 1"> <g> <path d="M17.617,6.383a7.944,7.944,0,0,1-1.748,12.568A8.028,8.028,0,0,1,4.283,13.908,8.028,8.028,0,0,1,6.378,6.391c.451-.46-.256-1.168-.707-.707A8.946,8.946,0,0,0,15.427,20.27a8.946,8.946,0,0,0,2.9-14.594c-.451-.461-1.158.247-.707.707Z"></path> <path d="M15.355,10.6l-3,3a.5.5,0,0,1-.35.15.508.508,0,0,1-.36-.15l-3-3a.5.5,0,0,1,.71-.71l2.14,2.14V3.555a.508.508,0,0,1,.5-.5.5.5,0,0,1,.5.5v8.49l2.15-2.16a.5.5,0,0,1,.71.71Z"></path> </g> </g> </g></svg>
+                        Enregistrer les modifications</button>
+                    <a href="/admin/categories" class="button button--secondary">
+                        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                        Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

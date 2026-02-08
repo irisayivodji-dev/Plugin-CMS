@@ -1,0 +1,22 @@
+{
+  "name": "projet-semestriel",
+  "version": "1.0.0",
+  "description": "Projet semestriel – Bloc 2 RNCP39235",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "sass -w assets/main.scss dist/css/main.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yascodev/projet-semestriel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yascodev/projet-semestriel/issues"
+  },
+  "homepage": "https://github.com/yascodev/projet-semestriel#readme"
+}

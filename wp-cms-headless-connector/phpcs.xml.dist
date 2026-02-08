@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="WP CMS Headless Connector">
+	<description>WordPress Coding Standards pour le plugin CMS Headless Connector.</description>
+
+	<file>.</file>
+
+	<!-- Exclure dossiers tiers et build -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+
+	<!-- Règles WordPress -->
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+	</rule>
+
+	<!-- PHP minimum -->
+	<config name="testVersion" value="7.4-"/>
+</ruleset>

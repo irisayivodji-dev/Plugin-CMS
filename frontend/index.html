@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/src/css/main.scss">
+    <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+    <div class="container">
+        <section>
+            <h2>.button</h2>
+            <p>
+                <a href="#" class="button button--lg button--primary">Button</a>
+                <a href="#" class=" button button--primary">Button</a>
+                <a href="#" class="button button--sm button--primary">Button</a>
+            </p>
+
+            <p>
+                <a href="#" class="button button--lg button--secondary">Button</a>
+                <a href="#" class="button button button--secondary">Button</a>
+                <a href="#" class="button button--sm button--secondary">Button</a>
+            </p>
+
+            <p>
+                <a href="#" class="button button--lg button--danger">Button</a>
+                <a href="#" class="button button button--danger">Button</a>
+                <a href="#" class="button button--sm button--danger">Button</a>
+            </p>
+        </section>
+        <section>
+            <h2>Cards</h2>
+            <p>
+                <article class="card">
+                    <img src="/images/image.jpg" class="card__image">
+                    <h2 class="card__title">Card Title</h2>
+                    <p class="card__description ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="button button--primary">Button</a>
+                </article>
+                <article class="card-horizontal mt-6">
+                    <img src="/images/image.jpg" class="card-horizontal__image">
+                    <div class="card-horizontal__bloc">
+                        <h2 class="card-horizontal__title">Card Title</h2>
+                        <p class="card-horizontal__description ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="button button--danger">Button</a>
+                    </div>
+                </article>
+            </p>
+        </section>
+        <section class="mt-6">
+            <h2>Banner</h2>
+            <div class="banner" style="background-image:url('assets/images/fond.jpg')"></div>
+            <div class="banner banner--text mt-6" style="background-image:url('assets/images/fond.jpg')">
+                <h2 class="banner__title">Lorem ipsum dolor sit amet, 
+                consectetur adipiscing elit. Cras ullamcorper nulla a 
+                ipsum imperdiet, ac porttitor dui sagittis.</h2>
+            </div>
+        </section>
+        <section class="mt-6 spinner-section">
+            <h2>Spinner</h2>
+            <div class="spinner"></div><br>
+            <div class="spinner spinner--primary"></div><br>
+            <div class="spinner spinner--secondary"></div><br>
+            <div class="spinner spinner--danger"></div><br>
+        </section>
+        <section class="m-6">
+            <h2>.menu</h2>
+            
+            <h3>Menu par défaut</h3>
+            <ul class="menu menu--light-grey">
+                <li class="menu__item"><a href="#" class="menu__link menu__link--active">Copy item</a></li>
+                <li class="menu__item"><a href="#" class="menu__link">Past item</a></li>
+                <li class="menu__item"><a href="#" class="menu__link">Cut item</a></li>
+            </ul>
+            
+            <h3>Menu primary</h3>
+            <ul class="menu menu--primary">
+                <li class="menu__item"><a href="#" class="menu__link menu__link--active">Copy item</a></li>
+                <li class="menu__item"><a href="#" class="menu__link">Past item</a></li>
+                <li class="menu__item"><a href="#" class="menu__link">Cut item</a></li>
+            </ul>
+            
+            <h3>Menu secondary</h3>
+            <ul class="menu menu--secondary">
+                <li class="menu__item"><a href="#" class="menu__link menu__link--active">Copy item</a></li>
+                <li class="menu__item"><a href="#" class="menu__link">Past item</a></li>
+                <li class="menu__item"><a href="#" class="menu__link">Cut item</a></li>
+            </ul>
+            
+            <h3>Menu danger</h3>
+            <ul class="menu menu--danger">
+                <li class="menu__item"><a href="#" class="menu__link menu__link--active">Copy item</a></li>
+                <li class="menu__item"><a href="#" class="menu__link">Past item</a></li>
+                <li class="menu__item"><a href="#" class="menu__link">Cut item</a></li>
+            </ul>
+        </section>
+    </div>
+    
+</body>
+</html>

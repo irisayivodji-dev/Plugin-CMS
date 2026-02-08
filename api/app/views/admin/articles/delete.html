@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Supprimer l'article - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <div class="dashboard__header">
+            <a href="/admin/articles" class="dashboard__back">Retour à la liste</a>
+            <h1 class="dashboard__title">Supprimer l'article</h1>
+        </div>
+        <div class="dashboard__content">
+            <div class="users__delete-confirm">
+                <div class="users__delete-info">
+                    <h2 class="users__delete-title">Confirmer la suppression</h2>
+                    <p class="users__delete-message">
+                        Êtes-vous sûr de vouloir supprimer l'article <strong>"<?= htmlspecialchars($article->title) ?>"</strong> ?
+                    </p>
+                    <p class="users__delete-warning">
+                        Cette action est irréversible. L'article et toutes ses données associées seront définitivement supprimés.
+                    </p>
+                </div>
+
+                <div class="article-delete__preview">
+                    <h3 class="article-delete__preview-title">Aperçu de l'article</h3>
+                    <div class="article-delete__preview-content">
+                        <p><strong>Titre :</strong> <?= htmlspecialchars($article->title) ?></p>
+                        <p><strong>Statut :</strong> 
+                            <?php
+                            $statusLabels = [
+                                'draft' => 'Brouillon',
+                                'published' => 'Publié',
+                                'archived' => 'Archivé'
+                            ];
+                            echo htmlspecialchars($statusLabels[$article->status] ?? $article->status);
+                            ?>
+                        </p>
+                        <?php if ($article->excerpt): ?>
+                            <p><strong>Résumé :</strong> <?= htmlspecialchars(mb_substr($article->excerpt, 0, 150)) ?><?= mb_strlen($article->excerpt) > 150 ? '...' : '' ?></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <form action="/admin/articles/delete/<?= htmlspecialchars($article->id) ?>" method="POST" class="users__delete-form">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                    <input type="hidden" name="_method" value="DELETE">
+                    
+                    <div class="users__form-actions">
+                        <button type="submit" class="button button--red">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Confirmer la suppression
+                        </button>
+                        <a href="/admin/articles" class="button button--secondary">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                            </svg>
+                            Annuler
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

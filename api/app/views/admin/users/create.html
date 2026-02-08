@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un utilisateur - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <a href="/admin/users" class="dashboard__back">Retour à la liste</a>
+        <div class="dashboard__header">
+            <h1 class="dashboard__title">Nouvel utilisateur</h1>
+        </div>
+        <div class="dashboard__content">
+            <form method="POST" action="/admin/users/create" class="users__form">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                
+                <?php if (isset($errors['csrf'])): ?>
+                    <div class="users__alert users__alert--error">
+                        <?= htmlspecialchars($errors['csrf']) ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="users__form-group">
+                    <label for="email" class="users__label">Email <span class="users__required">*</span></label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="users__input <?= isset($errors['email']) ? 'users__input--error' : '' ?>"
+                        value="<?= htmlspecialchars($old['email'] ?? '') ?>"
+                        required
+                    >
+                    <?php if (isset($errors['email'])): ?>
+                        <span class="users__error"><?= htmlspecialchars($errors['email']) ?></span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="users__form-group users__form-group--inline">
+                    <div class="users__form-group">
+                        <label for="firstname" class="users__label">Prénom <span class="users__required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="firstname" 
+                            name="firstname" 
+                            class="users__input <?= isset($errors['firstname']) ? 'users__input--error' : '' ?>"
+                            value="<?= htmlspecialchars($old['firstname'] ?? '') ?>"
+                            maxlength="255"
+                            required
+                        >
+                        <?php if (isset($errors['firstname'])): ?>
+                            <span class="users__error"><?= htmlspecialchars($errors['firstname']) ?></span>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="users__form-group">
+                        <label for="lastname" class="users__label">Nom <span class="users__required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="lastname" 
+                            name="lastname" 
+                            class="users__input <?= isset($errors['lastname']) ? 'users__input--error' : '' ?>"
+                            value="<?= htmlspecialchars($old['lastname'] ?? '') ?>"
+                            maxlength="255"
+                            required
+                        >
+                        <?php if (isset($errors['lastname'])): ?>
+                            <span class="users__error"><?= htmlspecialchars($errors['lastname']) ?></span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="users__form-group">
+                    <label for="password" class="users__label">Mot de passe <span class="users__required">*</span></label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="users__input <?= isset($errors['password']) ? 'users__input--error' : '' ?>"
+                        minlength="8"
+                        required
+                    >
+                    <?php if (isset($errors['password'])): ?>
+                        <span class="users__error"><?= htmlspecialchars($errors['password']) ?></span>
+                    <?php endif; ?>
+                    <small class="users__help">Minimum 8 caractères</small>
+                </div>
+
+                <div class="users__form-group">
+                    <label for="role" class="users__label">Rôle <span class="users__required">*</span></label>
+                    <select 
+                        id="role" 
+                        name="role" 
+                        class="users__select <?= isset($errors['role']) ? 'users__input--error' : '' ?>"
+                        required
+                    >
+                        <option value="author" <?= ($old['role'] ?? 'author') === 'author' ? 'selected' : '' ?>>Auteur</option>
+                        <option value="editor" <?= ($old['role'] ?? '') === 'editor' ? 'selected' : '' ?>>Éditeur</option>
+                        <option value="admin" <?= ($old['role'] ?? '') === 'admin' ? 'selected' : '' ?>>Administrateur</option>
+                    </select>
+                    <?php if (isset($errors['role'])): ?>
+                        <span class="users__error"><?= htmlspecialchars($errors['role']) ?></span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="users__form-actions">
+                    <button type="submit" class="button button--indigo">
+                        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 18L14 18M17 15V21M7.68213 14C8.63244 14.6318 9.77319 15 10.9999 15C11.7012 15 12.3744 14.8797 13 14.6586M10.5 21H5.6C5.03995 21 4.75992 21 4.54601 20.891C4.35785 20.7951 4.20487 20.6422 4.10899 20.454C4 20.2401 4 19.9601 4 19.4V17C4 15.3431 5.34315 14 7 14H7.5M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        Créer l'utilisateur</button>
+                    <a href="/admin/users" class="button button--secondary">
+                        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                        Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

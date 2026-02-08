@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Connexion</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/dist/css/main.css">
+    </head>
+
+    <body class="login">
+        <div class="login__wrapper">
+            <div class="login__left">
+                <div class="login__brand">
+                    <div class="login__logo">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h1 class="login__brand-title">Bienvenue</h1>
+                    <p class="login__brand-subtitle">Accédez à votre espace personnel</p>
+                </div>
+            </div>
+
+            <div class="login__right">
+                <div class="login__card">
+                    <div class="login__header">
+                        <h2 class="login__title">Connexion</h2>
+                        <p class="login__subtitle">Entrez vos identifiants pour continuer</p>
+                    </div>
+
+                    <?php if (!empty($error)): ?>
+                        <div class="login__alert">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span><?= htmlspecialchars($error) ?></span>
+                        </div>
+                    <?php endif; ?>
+
+                    <form method="POST" action="/api/v1/auth/login" class="login__form" id="loginForm">
+                        <input type="hidden" name="csrf_token" value="<?= isset($csrf_token) ? htmlspecialchars($csrf_token) : '' ?>">
+                        <div class="login__field">
+                            <label class="login__label">Email</label>
+                            <div class="login__input-wrapper">
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    id="email"
+                                    class="login__input" 
+                                    placeholder="nom@exemple.com"
+                                    required
+                                    autocomplete="email"
+                                >
+                            </div>
+                            <span class="login__error" id="emailError"></span>
+                        </div>
+
+                        <div class="login__field">
+                            <label class="login__label">Mot de passe</label>
+                            <div class="login__input-wrapper">
+                                <input 
+                                    type="password" 
+                                    name="password" 
+                                    id="password"
+                                    class="login__input" 
+                                    placeholder="••••••••"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                            </div>
+                            <span class="login__error" id="passwordError"></span>
+                        </div>
+
+                        <button type="submit" class="login__button">
+                            Se connecter
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('loginForm');
+                const emailInput = document.getElementById('email');
+                const passwordInput = document.getElementById('password');
+                const emailError = document.getElementById('emailError');
+                const passwordError = document.getElementById('passwordError');
+
+                function validateEmail(email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(email);
+                }
+
+                function showError(input, errorElement, message) {
+                    input.classList.add('error');
+                    errorElement.textContent = message;
+                    errorElement.classList.add('show');
+                }
+
+                function hideError(input, errorElement) {
+                    input.classList.remove('error');
+                    errorElement.classList.remove('show');
+                    errorElement.textContent = '';
+                }
+
+                emailInput.addEventListener('blur', function() {
+                    const email = emailInput.value.trim();
+                    if (email === '') {
+                        showError(emailInput, emailError, 'L\'email est requis');
+                    } else if (!validateEmail(email)) {
+                        showError(emailInput, emailError, 'Veuillez saisir un email valide');
+                    } else {
+                        hideError(emailInput, emailError);
+                    }
+                });
+
+                emailInput.addEventListener('input', function() {
+                    hideError(emailInput, emailError);
+                });
+
+                passwordInput.addEventListener('blur', function() {
+                    const password = passwordInput.value;
+                    if (password === '') {
+                        showError(passwordInput, passwordError, 'Le mot de passe est requis');
+                    } else {
+                        hideError(passwordInput, passwordError);
+                    }
+                });
+
+                passwordInput.addEventListener('input', function() {
+                    hideError(passwordInput, passwordError);
+                });
+
+                form.addEventListener('submit', function(e) {
+                    let isValid = true;
+                    const email = emailInput.value.trim();
+                    const password = passwordInput.value;
+
+                    if (email === '') {
+                        showError(emailInput, emailError, 'L\'email est requis');
+                        isValid = false;
+                    } else if (!validateEmail(email)) {
+                        showError(emailInput, emailError, 'Veuillez saisir un email valide');
+                        isValid = false;
+                    } else {
+                        hideError(emailInput, emailError);
+                    }
+
+                    if (password === '') {
+                        showError(passwordInput, passwordError, 'Le mot de passe est requis');
+                        isValid = false;
+                    } else {
+                        hideError(passwordInput, passwordError);
+                    }
+
+                    if (!isValid) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

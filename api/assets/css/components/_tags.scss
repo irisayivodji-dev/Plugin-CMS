@@ -1,0 +1,46 @@
+@use '../partials/variables';
+@use '../partials/mixins' as m;
+@use "../partials/functions" as f;
+
+.tags {
+  &__suggestions {
+    position: relative;
+    margin-top: f.rem(8);
+  }
+
+  &__suggestions-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: f.rem(4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: f.rem(200);
+    overflow-y: auto;
+  }
+
+  &__suggestion-item {
+    padding: f.rem(8) f.rem(12);
+    cursor: pointer;
+    color: var(--slate-700);
+    font-size: f.rem(14);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--gray-100);
+    }
+
+    &:first-child {
+      border-top-left-radius: f.rem(4);
+      border-top-right-radius: f.rem(4);
+    }
+
+    &:last-child {
+      border-bottom-left-radius: f.rem(4);
+      border-bottom-right-radius: f.rem(4);
+    }
+  }
+}

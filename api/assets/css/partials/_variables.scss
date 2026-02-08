@@ -1,0 +1,48 @@
+@use "sass:color";
+@use "sass:map";
+//colors
+
+$colors : (
+    'blue': #0D6EFD,
+    'gray': #6C757D,
+    'red': #DC3545,
+    'pink': #ec4899,
+    'orange': #f97316,
+    'green': #10b981,
+    'yellow': #f59e0b,
+    'black': #000000,
+    'white': #FFFFFF,
+    'slate': #64748b,
+    'indigo': #6366f1,
+    'purple': #8b5cf6
+);
+
+$shades: (
+    950: 12%,
+    900: 20%,
+    800: 28%,
+    700: 35%,
+    600: 50%,
+    500: 60%,
+    400: 71%,
+    300: 82%,
+    200: 90%,
+    100: 95%,
+    50: 97%,
+);
+
+$agnostic: (
+    'primary': map.get($colors, 'indigo'),
+    'secondary': map.get($colors, 'gray'),
+    'danger': map.get($colors, 'red'),
+);
+
+$breakpoints: (
+    'sm': 576px,
+    'md': 768px,
+    'lg': 992px,
+    'xl': 1200px,
+    'xxl' : 1400px
+);
+
+$spacing: 0.25rem;

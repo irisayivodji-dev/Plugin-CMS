@@ -1,0 +1,117 @@
+@use '../partials/variables';
+@use '../partials/mixins';
+@use "../partials/functions" as f;
+@use "sass:map";
+
+.error-page {
+  min-height: 100vh;
+  background: map.get(variables.$agnostic, 'background');
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: map.get(variables.$agnostic, 'text-primary');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: f.rem(20);
+
+  &__container {
+    max-width: f.rem(600);
+    width: 100%;
+    text-align: center;
+  }
+
+  &__content {
+    background: map.get(variables.$agnostic, 'background-white');
+    border-radius: f.rem(16);
+    padding: f.rem(60) f.rem(40);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  &__title {
+    font-size: f.rem(120);
+    font-weight: 700;
+    color: map.get(variables.$agnostic, 'danger');
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+
+  &__subtitle {
+    font-size: f.rem(28);
+    font-weight: 600;
+    color: map.get(variables.$agnostic, 'text-dark');
+    margin: f.rem(16) 0 f.rem(12) 0;
+  }
+
+  &__message {
+    font-size: f.rem(16);
+    color: map.get(variables.$agnostic, 'text-secondary');
+    margin: 0 0 f.rem(32) 0;
+    line-height: 1.6;
+  }
+
+  &__actions {
+    display: flex;
+    gap: f.rem(16);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__button {
+    display: inline-block;
+    padding: f.rem(12) f.rem(24);
+    background: linear-gradient(135deg, map.get(variables.$agnostic, 'primary') 0%, map.get(variables.$agnostic, 'primary-hover') 100%);
+    color: map.get(variables.$colors, 'white');
+    text-decoration: none;
+    border-radius: f.rem(8);
+    font-size: f.rem(14);
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    padding: f.rem(12) f.rem(24);
+    color: map.get(variables.$agnostic, 'primary');
+    text-decoration: none;
+    border-radius: f.rem(8);
+    font-size: f.rem(14);
+    font-weight: 600;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: map.get(variables.$agnostic, 'primary-hover');
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .error-page {
+    &__content {
+      padding: f.rem(40) f.rem(24);
+    }
+
+    &__title {
+      font-size: f.rem(80);
+    }
+
+    &__subtitle {
+      font-size: f.rem(24);
+    }
+
+    &__actions {
+      flex-direction: column;
+    }
+
+    &__button,
+    &__link {
+      width: 100%;
+    }
+  }
+}

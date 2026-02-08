@@ -1,0 +1,357 @@
+[
+  {
+    "path": "/api/v1/users",
+    "method": "GET",
+    "controller": "Api\\v1\\Users\\GetUsersController"
+  },
+  {
+    "path": "/api/v1/users/:id",
+    "method": "GET",
+    "controller": "Api\\v1\\Users\\GetUserController"
+  },
+  {
+    "path": "/api/v1/users",
+    "method": "POST",
+    "controller": "Api\\v1\\Users\\PostUserController"
+  },
+  {
+    "path": "/api/v1/users/:id",
+    "method": "PATCH",
+    "controller": "Api\\v1\\Users\\PatchUserController"
+  },
+  {
+    "path": "/api/v1/users/:id",
+    "method": "DELETE",
+    "controller": "Api\\v1\\Users\\DeleteUserController"
+  },
+  {
+    "path": "/api/v1/auth/login",
+    "method": "POST",
+    "controller": "Api\\v1\\Auth\\LoginController"
+  },
+  {
+    "path": "/api/v1/auth/logout",
+    "method": "GET",
+    "controller": "Api\\v1\\Auth\\LogoutController"
+  },
+  {
+    "path": "/api/v1/auth/logout",
+    "method": "POST",
+    "controller": "Api\\v1\\Auth\\LogoutController"
+  },
+  {
+    "path": "/api/v1/auth/profile",
+    "method": "GET",
+    "controller": "Api\\v1\\Auth\\ProfileController"
+  },
+  {
+    "path": "/api/v1/articles",
+    "method": "GET",
+    "controller": "Api\\v1\\Articles\\GetArticlesController"
+  },
+  {
+    "path": "/api/v1/articles/slug/:slug",
+    "method": "GET",
+    "controller": "Api\\v1\\Articles\\GetArticleBySlugController"
+  },
+  {
+    "path": "/api/v1/articles/:id",
+    "method": "GET",
+    "controller": "Api\\v1\\Articles\\GetArticleController"
+  },
+  {
+    "path": "/api/v1/articles/:id/categories",
+    "method": "GET",
+    "controller": "Api\\v1\\Articles\\GetArticleCategoriesController"
+  },
+  {
+    "path": "/api/v1/articles/:id/tags",
+    "method": "GET",
+    "controller": "Api\\v1\\Articles\\GetArticleTagsController"
+  },
+  {
+    "path": "/api/v1/articles",
+    "method": "POST",
+    "controller": "Api\\v1\\Articles\\CreateArticleController"
+  },
+  {
+    "path": "/api/v1/articles/:id",
+    "method": "PATCH",
+    "controller": "Api\\v1\\Articles\\PatchArticleController"
+  },
+  {
+    "path": "/api/v1/articles/:id/publish",
+    "method": "PATCH",
+    "controller": "Api\\v1\\Articles\\PublishArticleController"
+  },
+  {
+    "path": "/api/v1/articles/:id/archive",
+    "method": "PATCH",
+    "controller": "Api\\v1\\Articles\\ArchiveArticleController"
+  },
+  {
+    "path": "/api/v1/articles/:id",
+    "method": "DELETE",
+    "controller": "Api\\v1\\Articles\\DeleteArticleController"
+  },
+  {
+    "path": "/api/v1/articles/:id/versions",
+    "method": "GET",
+    "controller": "Api\\v1\\Articles\\GetArticleVersionsController"
+  },
+  {
+    "path": "/api/v1/articles/:id/versions/:versionId",
+    "method": "GET",
+    "controller": "Api\\v1\\Articles\\GetArticleVersionController"
+  },
+  {
+    "path": "/api/v1/categories",
+    "method": "GET",
+    "controller": "Api\\v1\\Categories\\GetCategoriesController"
+  },
+  {
+    "path": "/api/v1/categories/:id",
+    "method": "GET",
+    "controller": "Api\\v1\\Categories\\GetCategoryController"
+  },
+  {
+    "path": "/api/v1/categories",
+    "method": "POST",
+    "controller": "Api\\v1\\Categories\\PostCategoryController"
+  },
+  {
+    "path": "/api/v1/categories/:id",
+    "method": "PATCH",
+    "controller": "Api\\v1\\Categories\\PatchCategoryController"
+  },
+  {
+    "path": "/api/v1/categories/:id",
+    "method": "DELETE",
+    "controller": "Api\\v1\\Categories\\DeleteCategoryController"
+  },
+  {
+    "path": "/api/v1/categories/:id/articles",
+    "method": "GET",
+    "controller": "Api\\v1\\Categories\\GetCategoryArticlesController"
+  },
+  {
+    "path": "/api/v1/tags",
+    "method": "GET",
+    "controller": "Api\\v1\\Tags\\GetTagsController"
+  },
+  {
+    "path": "/api/v1/tags/:id",
+    "method": "GET",
+    "controller": "Api\\v1\\Tags\\GetTagController"
+  },
+  {
+    "path": "/api/v1/tags",
+    "method": "POST",
+    "controller": "Api\\v1\\Tags\\PostTagController"
+  },
+  {
+    "path": "/api/v1/tags/:id",
+    "method": "PATCH",
+    "controller": "Api\\v1\\Tags\\PatchTagController"
+  },
+  {
+    "path": "/api/v1/tags/:id",
+    "method": "DELETE",
+    "controller": "Api\\v1\\Tags\\DeleteTagController"
+  },
+  {
+    "path": "/api/v1/tags/:id/articles",
+    "method": "GET",
+    "controller": "Api\\v1\\Tags\\GetTagArticlesController"
+  },
+  {
+    "path": "/login",
+    "method": "GET",
+    "controller": "Auth\\LoginPageController"
+  },
+  {
+    "path": "/admin",
+    "method": "GET",
+    "controller": "Admin\\AdminController"
+  },
+  {
+    "path": "/403",
+    "method": "GET",
+    "controller": "Errors\\ForbiddenController"
+  },
+  {
+    "path": "/admin/categories",
+    "method": "GET",
+    "controller": "Admin\\Categories\\CategoriesController"
+  },
+   {
+    "path": "/admin/categories/create",
+    "method": "GET",
+    "controller": "Admin\\Categories\\CreateCategoryController"
+  },
+  {
+    "path": "/admin/categories/create",
+    "method": "POST",
+    "controller": "Admin\\Categories\\CreateCategoryController"
+  },
+  {
+    "path": "/admin/categories/edit/:id",
+    "method": "GET",
+    "controller": "Admin\\Categories\\EditCategoryController"
+  },
+  {
+    "path": "/admin/categories/edit/:id",
+    "method": "PATCH",
+    "controller": "Admin\\Categories\\EditCategoryController"
+  },
+  {
+    "path": "/admin/categories/delete/:id",
+    "method": "GET",
+    "controller": "Admin\\Categories\\DeleteCategoryController"
+  },
+  {
+    "path": "/admin/categories/delete/:id",
+    "method": "POST",
+    "controller": "Admin\\Categories\\DeleteCategoryController"
+  },
+  {
+    "path": "/admin/tags",
+    "method": "GET",
+    "controller": "Admin\\Tags\\TagsController"
+  },
+  {
+    "path": "/admin/tags/create",
+    "method": "GET",
+    "controller": "Admin\\Tags\\CreateTagController"
+  },
+  {
+    "path": "/admin/tags/create",
+    "method": "POST",
+    "controller": "Admin\\Tags\\CreateTagController"
+  },
+  {
+    "path": "/admin/tags/edit/:id",
+    "method": "GET",
+    "controller": "Admin\\Tags\\EditTagController"
+  },
+  {
+    "path": "/admin/tags/edit/:id",
+    "method": "PATCH",
+    "controller": "Admin\\Tags\\EditTagController"
+  },
+  {
+    "path": "/admin/tags/delete/:id",
+    "method": "GET",
+    "controller": "Admin\\Tags\\DeleteTagController"
+  },
+  {
+    "path": "/admin/tags/delete/:id",
+    "method": "POST",
+    "controller": "Admin\\Tags\\DeleteTagController"
+  },
+  {
+    "path": "/admin/users",
+    "method": "GET",
+    "controller": "Admin\\Users\\UsersController"
+  },
+  {
+    "path": "/admin/users/create",
+    "method": "GET",
+    "controller": "Admin\\Users\\CreateUserController"
+  },
+  {
+    "path": "/admin/users/create",
+    "method": "POST",
+    "controller": "Admin\\Users\\CreateUserController"
+  },
+  {
+    "path": "/admin/users/edit/:id",
+    "method": "GET",
+    "controller": "Admin\\Users\\EditUserController"
+  },
+  {
+    "path": "/admin/users/edit/:id",
+    "method": "PATCH",
+    "controller": "Admin\\Users\\EditUserController"
+  },
+  {
+    "path": "/admin/users/delete/:id",
+    "method": "GET",
+    "controller": "Admin\\Users\\DeleteUserController"
+  },
+  {
+    "path": "/admin/users/delete/:id",
+    "method": "POST",
+    "controller": "Admin\\Users\\DeleteUserController"
+  },
+  {
+    "path": "/admin/articles",
+    "method": "GET",
+    "controller": "Admin\\Articles\\ArticlesController"
+  },
+  {
+    "path": "/admin/articles/create",
+    "method": "GET",
+    "controller": "Admin\\Articles\\CreateArticleController"
+  },
+  {
+    "path": "/admin/articles/create",
+    "method": "POST",
+    "controller": "Admin\\Articles\\CreateArticleController"
+  },
+  {
+    "path": "/admin/articles/edit/:id",
+    "method": "GET",
+    "controller": "Admin\\Articles\\EditArticleController"
+  },
+  {
+    "path": "/admin/articles/edit/:id",
+    "method": "PATCH",
+    "controller": "Admin\\Articles\\EditArticleController"
+  },
+  {
+    "path": "/admin/articles/delete/:id",
+    "method": "GET",
+    "controller": "Admin\\Articles\\DeleteArticleController"
+  },
+  {
+    "path": "/admin/articles/delete/:id",
+    "method": "POST",
+    "controller": "Admin\\Articles\\DeleteArticleController"
+  },
+  {
+    "path": "/admin/articles/publish/:id",
+    "method": "POST",
+    "controller": "Admin\\Articles\\PublishArticleController"
+  },
+  {
+    "path": "/admin/articles/show/:id",
+    "method": "GET",
+    "controller": "Admin\\Articles\\ShowArticleController"
+  },
+  {
+    "path": "/admin/media",
+    "method": "GET",
+    "controller": "Admin\\Media\\MediaController"
+  },
+  {
+    "path": "/admin/media/upload",
+    "method": "GET",
+    "controller": "Admin\\Media\\UploadMediaController"
+  },
+  {
+    "path": "/admin/media/upload",
+    "method": "POST",
+    "controller": "Admin\\Media\\UploadMediaController"
+  },
+  {
+    "path": "/admin/media/delete/:id",
+    "method": "GET",
+    "controller": "Admin\\Media\\DeleteMediaController"
+  },
+  {
+    "path": "/admin/media/delete/:id",
+    "method": "POST",
+    "controller": "Admin\\Media\\DeleteMediaController"
+  }
+]

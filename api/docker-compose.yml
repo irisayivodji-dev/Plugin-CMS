@@ -1,0 +1,27 @@
+services:
+     php-framework-php:
+          container_name: php-CMS
+          build:
+               context: .
+               dockerfile: Dockerfile
+          volumes: 
+               - ./app:/var/www/html
+               - ./log:/var/log/apache2/
+               - ./dist:/var/www/html/dist
+               - ./app/uploads:/var/www/html/uploads
+          ports:
+               - 8079:80
+     php-framework-postgres:
+          image: postgres:16-alpine
+          container_name: php-postgres-CMS
+          restart: unless-stopped
+          environment:
+            POSTGRES_DB: 'db'
+            POSTGRES_USER: 'user'
+            POSTGRES_PASSWORD: 'password'
+          ports:
+            - '5433:5432'
+          volumes:
+            - ./postgres:/var/lib/postgresql/data
+            - ./database/init:/docker-entrypoint-initdb.d
+     

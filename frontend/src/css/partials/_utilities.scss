@@ -1,0 +1,66 @@
+@use "functions" as f;
+@use "variables" as v;
+
+$positions :(
+    't': 'top',
+    'b': 'bottom',
+    'l': 'left',
+    'r': 'right'
+);
+
+$classes: (
+    'bg': 'background-color',
+    'text': 'color',
+    'border': 'border-color'
+);
+
+@layer utilities {
+    
+@for $i from 1 through 6 { 
+    $value: calc($i * var(--spacing));
+    .p-#{$i} { 
+        padding : $value; 
+    } 
+    .m-#{$i} { 
+        margin : $value; 
+    }
+}
+
+@for $i from 1 through 6 { 
+    @each $abbr, $position in $positions {
+        $value: calc($i * var(--spacing));
+        .p#{$abbr}-#{$i} { 
+            padding-#{$position} : $value; 
+        } 
+        .m#{$abbr}-#{$i} { 
+            margin-#{$position} : $value; 
+        }
+    }
+}
+
+@each $name, $value in v.$colors {
+    .bg--#{$name} {
+        background-color: var(--#{$name});
+    }
+    .text--#{$name} {
+        color: var(--#{$name});
+    }
+    .border--#{$name} {
+        border-color: var(--#{$name});
+    }
+}
+@each $class-abbr, $property in $classes {
+    @each $name, $color in v.$colors {
+        .#{$class-abbr}-#{$name} {
+            #{$property}: var(--#{$name});
+        }
+    }
+
+}
+
+
+
+}
+
+
+

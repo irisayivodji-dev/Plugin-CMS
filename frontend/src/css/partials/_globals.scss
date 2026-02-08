@@ -1,0 +1,61 @@
+@use "fonts" as f;
+@use "variables" as v;
+@use "sass:color";
+@layer base {
+:root {
+    --spacing: #{v.$spacing};
+
+    @each $name, $value in v.$colors {
+        --#{$name}: #{$value};
+        --#{$name}-hover: #{color.scale($value, $lightness: 20%)};
+        
+        $hue : color.channel($value, 'hue', hsl);
+        $saturation : color.channel($value, 'saturation', hsl);
+        $lightness : color.channel($value, 'lightness', hsl);
+
+        $prevLightness: 0%;
+        @each $suffix, $percent in v.$shades {
+            @if($lightness > $prevLightness and $lightness <= $percent) {
+                --#{$name}-#{$suffix}: #{hsl($hue, $saturation, $lightness)};
+            }else{
+                --#{$name}-#{$suffix}: #{hsl($hue, $saturation, $percent)};
+            }
+            
+        }
+    }
+
+    
+    @each $name, $value in v.$agnostic {
+        --#{$name}: #{$value};
+    }
+
+    --bg-color : var(--white);
+    --text-color : var(--black-hover);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+
+    @media (prefers-color-scheme: dark) {
+        --bg-color : var(--black-hover);
+        --text-color : var(--white);
+    }
+}
+
+body {
+    font-family: f.$mainFont;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+button {
+    all: unset;
+}
+
+img{
+    max-width: 100%;
+    height: auto;
+}
+
+.dark,
+[data-theme="dark"] {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+}

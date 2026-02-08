@@ -1,0 +1,318 @@
+@use '../partials/variables';
+@use '../partials/mixins' as m;
+@use "../partials/functions" as f;
+
+.media {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(f.rem(200), 1fr));
+    gap: f.rem(24);
+    margin-top: f.rem(24);
+  }
+
+  &__item {
+    background: var(--white);
+    border-radius: f.rem(8);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__preview {
+    width: 100%;
+    height: f.rem(150);
+    object-fit: cover;
+    display: block;
+    background: var(--gray-100);
+
+    &--file {
+      @include m.flex-center;
+      background: var(--slate-100);
+      color: var(--slate-600);
+    }
+  }
+
+  &__info {
+    padding: f.rem(12);
+  }
+
+  &__filename {
+    font-weight: 600;
+    font-size: f.rem(14);
+    color: var(--slate-800);
+    margin-bottom: f.rem(4);
+    word-break: break-word;
+  }
+
+  &__type {
+    font-size: f.rem(12);
+    color: var(--slate-500);
+    margin-bottom: f.rem(4);
+    text-transform: capitalize;
+  }
+
+  &__size {
+    font-size: f.rem(11);
+    color: var(--slate-400);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: f.rem(8);
+    
+    a {
+      padding: f.rem(6);
+      border: 1px solid var(--gray-200);
+      border-radius: f.rem(4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      
+      svg {
+        stroke: var(--gray-600);
+        transition: stroke 0.2s ease;
+      }
+      
+      &:hover {
+        background: var(--red-600);
+        border-color: var(--red-600);
+        
+        svg {
+          stroke: var(--white);
+        }
+      }
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    color: var(--gray-600);
+    font-size: f.rem(16);
+    margin-top: f.rem(48);
+  }
+}
+
+// Modal Médiathèque
+.media-library-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: f.rem(20);
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  &__content {
+    position: relative;
+    background: var(--white);
+    border-radius: f.rem(12);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: f.rem(900);
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: f.rem(24);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  &__title {
+    font-size: f.rem(20);
+    font-weight: 600;
+    color: var(--gray-900);
+    margin: 0;
+  }
+
+  &__close {
+    padding: f.rem(8);
+    border: none;
+    background: transparent;
+    color: var(--gray-600);
+    cursor: pointer;
+    border-radius: f.rem(4);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: var(--gray-100);
+      color: var(--gray-900);
+    }
+  }
+
+  &__body {
+    padding: f.rem(24);
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  &__empty {
+    text-align: center;
+    color: var(--gray-600);
+    font-size: f.rem(16);
+    padding: f.rem(48) f.rem(24);
+
+    a {
+      color: var(--indigo-600);
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--indigo-700);
+      }
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(f.rem(150), 1fr));
+    gap: f.rem(16);
+  }
+
+  &__item {
+    position: relative;
+    border-radius: f.rem(8);
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    aspect-ratio: 1;
+
+    &:hover {
+      border-color: var(--indigo-500);
+      transform: scale(1.02);
+
+      .media-library-modal__overlay-item {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__overlay-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  &__select {
+    color: var(--white);
+    font-weight: 600;
+    font-size: f.rem(14);
+    padding: f.rem(8) f.rem(16);
+    background: var(--indigo-600);
+    border-radius: f.rem(4);
+  }
+}
+
+// Sélecteur de média dans le formulaire
+.media-selector {
+  &__preview {
+    position: relative;
+    margin-bottom: f.rem(12);
+    border-radius: f.rem(8);
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+  }
+
+  &__preview-img {
+    width: 100%;
+    height: auto;
+    max-height: f.rem(200);
+    object-fit: cover;
+    display: block;
+  }
+
+  &__remove {
+    position: absolute;
+    top: f.rem(8);
+    right: f.rem(8);
+    padding: f.rem(6);
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--white);
+    border: none;
+    border-radius: f.rem(4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.9);
+      transform: scale(1.1);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .media {
+    &__grid {
+      grid-template-columns: repeat(auto-fill, minmax(f.rem(150), 1fr));
+      gap: f.rem(16);
+    }
+  }
+
+  .media-library-modal {
+    padding: f.rem(12);
+
+    &__content {
+      max-height: 95vh;
+    }
+
+    &__header {
+      padding: f.rem(16);
+    }
+
+    &__body {
+      padding: f.rem(16);
+    }
+
+    &__grid {
+      grid-template-columns: repeat(auto-fill, minmax(f.rem(100), 1fr));
+      gap: f.rem(12);
+    }
+  }
+}

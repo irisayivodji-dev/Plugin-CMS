@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <div class="dashboard__header">
+            <h1 class="dashboard__title">Médiathèque</h1>
+            <a href="/admin/media/upload" class="button button--indigo">
+                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 5V19M5 12H19" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                Uploader un média</a>
+        </div>
+        <div class="dashboard__content">
+            <?php if (isset($flash_success) && $flash_success): ?>
+                <div class="users__alert users__alert--success">
+                    <?= htmlspecialchars($flash_success) ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (isset($flash_error) && $flash_error): ?>
+                <div class="users__alert users__alert--error">
+                    <?= htmlspecialchars($flash_error) ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (empty($media)): ?>
+                <p class="users__empty">Aucun média trouvé.</p>
+            <?php else: ?>
+                <div class="media__grid">
+                    <?php foreach ($media as $item): ?>
+                        <div class="media__item">
+                            <?php if ($item->file_type === 'image'): ?>
+                                <img src="/uploads/<?= htmlspecialchars($item->file_path) ?>" alt="<?= htmlspecialchars($item->alt_text ?? $item->filename) ?>" class="media__preview">
+                            <?php else: ?>
+                                <div class="media__preview media__preview--file">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            <?php endif; ?>
+                            <!-- <div class="media__info">
+                                <p class="media__filename"><?= htmlspecialchars($item->filename) ?></p>
+                                <p class="media__type"><?= htmlspecialchars(ucfirst($item->file_type)) ?></p>
+                                <?php if ($item->file_size): ?>
+                                    <p class="media__size"><?= number_format($item->file_size / 1024, 2) ?> KB</p>
+                                <?php endif; ?>
+                            </div> -->
+                            <div class="media__actions">
+                                <a href="/admin/media/delete/<?= htmlspecialchars($item->id) ?>" title="Supprimer le média">
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M10 11V17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M14 11V17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M4 7H20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>

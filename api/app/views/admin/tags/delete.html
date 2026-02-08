@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Supprimer un tag - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <a href="/admin/tags" class="dashboard__back">Retour à la liste</a>
+        <div class="dashboard__header">
+            <h1 class="dashboard__title">Supprimer un tag</h1>
+        </div>
+        <div class="dashboard__content">
+            <div class="users__delete-confirm">
+                <div class="users__alert users__alert--warning">
+                    <strong>Attention !</strong> Cette action est irréversible.
+                </div>
+                
+                <p>Êtes-vous sûr de vouloir supprimer le tag suivant ?</p>
+                
+                <div class="users__delete-info">
+                    <p><strong>Nom :</strong> <?= htmlspecialchars($tag->name) ?></p>
+                    <p><strong>Slug :</strong> <?= htmlspecialchars($tag->slug) ?></p>
+                    <?php if (!empty($tag->description)): ?>
+                        <p><strong>Description :</strong> <?= htmlspecialchars($tag->description) ?></p>
+                    <?php endif; ?>
+                    <?php if (isset($article_count) && $article_count > 0): ?>
+                        <p><strong>Articles associés :</strong> <?= htmlspecialchars($article_count) ?></p>
+                        <div class="users__alert users__alert--error mt-3">
+                            <strong>Attention !</strong> Ce tag est associé à <?= htmlspecialchars($article_count) ?> article(s). La suppression retirera l'association avec ces articles.
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <form method="POST" action="/admin/tags/delete/<?= htmlspecialchars($tag->id) ?>" class="users__delete-form">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                    <div class="users__form-actions">
+                        <button type="submit" class="button button--danger">
+                            <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6M14 10V17M10 10V17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            Confirmer la suppression</button>
+                        <a href="/admin/tags" class="button button--secondary">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                            Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

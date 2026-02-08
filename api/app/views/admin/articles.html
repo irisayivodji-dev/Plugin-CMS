@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des articles - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <div class="dashboard__header">
+            <h1 class="dashboard__title">Gestion des articles</h1>
+            <a href="/admin/articles/create" class="button button--indigo">
+                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15 8H17M15 12H17M17 16H7M7 8V12H11V8H7ZM5 20H19C20.1046 20 21 19.1046 21 18V6C21 4.89543 20.1046 4 19 4H5C3.89543 4 3 4.89543 3 6V18C3 19.1046 3.89543 20 5 20Z" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></g></svg>                        
+                Nouvel article</a>
+        </div>
+        <div class="dashboard__content">
+            <?php if (isset($flash_success) && $flash_success): ?>
+                <div class="users__alert users__alert--success">
+                    <?= htmlspecialchars($flash_success) ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (isset($flash_error) && $flash_error): ?>
+                <div class="users__alert users__alert--error">
+                    <?= htmlspecialchars($flash_error) ?>
+                </div>
+            <?php endif; ?>
+            
+            
+                <table class="users__table">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <?php if ($canManageAll): ?>
+                                <th>Auteur</th>
+                            <?php endif; ?>
+                            <th>Statut</th>
+                            <th>Date de création</th>
+                            <th>Catégorie</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+            <?php if (empty($articles)): ?>
+                    <tbody class="users__empty__row">
+                        <tr class="users__empty">
+                            <td colspan="<?= $canManageAll ? '7' : '6' ?>">Aucun article trouvé.</td>
+                        </tr>
+                    </tbody>
+            <?php else: ?>    
+                    <tbody>
+                        <?php foreach ($articles as $article): ?>
+                            <tr>
+                                <td>
+                                    <strong><?= htmlspecialchars($article['title']) ?></strong>
+                                </td>
+                                <?php if ($canManageAll): ?>
+                                    <td><?= htmlspecialchars($article['author_name']) ?></td>
+                                <?php endif; ?>
+                                <td>
+                                    <span class="users__role users__role--<?= htmlspecialchars($article['status']) ?>">
+                                        <?php
+                                        $statusLabels = [
+                                            'draft' => 'Brouillon',
+                                            'published' => 'Publié',
+                                            'archived' => 'Archivé'
+                                        ];
+                                        echo htmlspecialchars($statusLabels[$article['status']] ?? ucfirst($article['status']));
+                                        ?>
+                                    </span>
+                                </td>
+                                <td><?= htmlspecialchars(date('d/m/Y', strtotime($article['created_at']))) ?></td>
+                                <td>
+                                    <?php if (!empty($article['categories'])): ?>
+                                        <?= htmlspecialchars(implode(', ', $article['categories'])) ?>
+                                    <?php else: ?>
+                                        <span style="color: var(--gray-400);">Aucune</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="users__actions">
+                                    <a href="/admin/articles/show/<?= htmlspecialchars($article['id']) ?>" 
+                                       class="users__details"
+                                       title="Voir les détails">
+                                       <svg width="16px" height="16px" viewBox="0 -0.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>view_pus [#816]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-220.000000, -4559.000000)" fill="#404040"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M177,4402 C177,4401.448 177.448,4401 178,4401 L179,4401 L179,4400 C179,4399.448 179.448,4399 180,4399 C180.552,4399 181,4399.448 181,4400 L181,4401 L182,4401 C182.552,4401 183,4401.448 183,4402 C183,4402.552 182.552,4403 182,4403 L181,4403 L181,4404 C181,4404.552 180.552,4405 180,4405 C179.448,4405 179,4404.552 179,4404 L179,4403 L178,4403 C177.448,4403 177,4402.552 177,4402 M176,4412.221 C176,4413.325 175.105,4414.221 174,4414.221 C172.895,4414.221 172,4413.325 172,4412.221 C172,4411.116 172.895,4410.221 174,4410.221 C175.105,4410.221 176,4411.116 176,4412.221 M174,4416 C171.011,4416 168.195,4414.577 166.399,4412.221 C168.195,4409.864 171.011,4408.441 174,4408.441 C176.989,4408.441 179.805,4409.864 181.601,4412.221 C179.805,4414.577 176.989,4416 174,4416 M174,4406.441 C169.724,4406.441 165.999,4408.769 164,4412.221 C165.999,4415.672 169.724,4418 174,4418 C178.276,4418 182.001,4415.672 184,4412.221 C182.001,4408.769 178.276,4406.441 174,4406.441" id="view_pus-[#816]"> </path> </g> </g> </g> </g></svg>                                    </a>
+                                    <?php if ($canPublish && $article['status'] !== 'published'): ?>
+                                        <form action="/admin/articles/publish/<?= htmlspecialchars($article['id']) ?>" method="POST" style="display:inline-block;">
+                                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                                            <button type="submit" class="users__publish" title="Publier l'article">
+                                                <svg width="12px" height="12px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9 11L12 14L22 4" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                Publier
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                    <a href="/admin/articles/edit/<?= htmlspecialchars($article['id']) ?>" class="users__edit" title="Modifier l'article">
+                                        <svg width="12px" height="12px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                        Modifier
+                                    </a>
+                                    <a href="/admin/articles/delete/<?= htmlspecialchars($article['id']) ?>" class="users__delete" title="Supprimer l'article">
+                                        <svg width="12px" height="12px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6M14 10V17M10 10V17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                        Supprimer
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>

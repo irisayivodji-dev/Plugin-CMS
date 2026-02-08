@@ -1,0 +1,60 @@
+/* Shortcodes — affichage front */
+
+.wp-cms-connector-message-box {
+	padding: 0.75em 1em;
+	background: #f6f7f7;
+	border-left: 4px solid #dcdcde;
+	margin: 0.5em 0;
+}
+
+.wp-cms-connector-articles,
+.wp-cms-connector-categories,
+.wp-cms-connector-tags {
+	list-style: none;
+	margin: 0.75em 0;
+	padding: 0;
+}
+
+.wp-cms-connector-articles.wp-cms-connector-layout-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 1em;
+}
+
+.wp-cms-connector-article-item,
+.wp-cms-connector-category-item,
+.wp-cms-connector-tag-item {
+	margin-bottom: 0.5em;
+}
+
+.wp-cms-connector-article-item-title,
+.wp-cms-connector-article-title {
+	margin: 0 0 0.25em;
+	font-size: 1.1em;
+}
+
+.wp-cms-connector-article-item-excerpt,
+.wp-cms-connector-article-excerpt {
+	margin: 0 0 0.5em;
+	font-size: 0.95em;
+	opacity: 0.9;
+}
+
+.wp-cms-connector-article-content {
+	margin-top: 0.5em;
+}
+
+.wp-cms-connector-categories.wp-cms-connector-layout-tags .wp-cms-connector-category-item,
+.wp-cms-connector-tag-item {
+	display: inline-block;
+	margin-right: 0.5em;
+	margin-bottom: 0.25em;
+	padding: 0.2em 0.5em;
+	background: #f0f0f1;
+	border-radius: 3px;
+}
+
+.wp-cms-connector-desc {
+	font-size: 0.9em;
+	opacity: 0.85;
+}

@@ -1,0 +1,105 @@
+@use "../partials/variables" as v;
+@use "../partials/functions" as f;
+@layer components {
+    .card {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        border: 1px solid var(--gray-light);
+        width: f.rem(320);
+        padding: f.rem(20);
+        border-radius: f.rem(6);
+        transition: box-shadow 0.3s;
+        gap: f.rem(10);
+        overflow: hidden;
+
+        &:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        &__image {
+            max-width: unset;
+            width: inherit;
+            object-fit: cover;
+            border-radius: f.rem(6) f.rem(6) 0 0;
+            margin-block: f.rem(-20) f.rem(10);
+            margin-inline: f.rem(-20);
+            aspect-ratio: 320/200;
+        }
+
+        &__title {
+            font-size: f.rem(20);
+            font-weight: 600;
+            line-height: f.rem(24);
+            margin-block: 0;
+
+        }
+
+        &__description {
+            color: var(--gray-dark);
+            font-size: f.rem(14);  
+            line-height: f.rem(24);
+            font-weight: 400; 
+            margin-block: 0;
+        }
+
+        
+    }
+    .card-horizontal {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: row;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        border: 1px solid var(--gray-light);
+        width: f.rem(520);
+        height: f.rem(200);
+        padding: f.rem(20);
+        border-radius: f.rem(6);
+        transition: box-shadow 0.3s;
+        overflow: hidden;
+
+        &:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        &__bloc {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-left: f.rem(40);
+            align-items: flex-start;
+            width: 100%;
+            gap: f.rem(10);
+        }
+
+        &__image {
+            max-width: unset;
+            width: 200px;
+            object-fit: cover;
+            // border-radius: f.rem(6) f.rem(6) 0 0;
+            margin-block: f.rem(-20) f.rem(10);
+            margin-inline: f.rem(-20);
+            aspect-ratio: 200/200;
+        }
+
+        &__title {
+            font-size: f.rem(20);
+            font-weight: 600;
+            line-height: f.rem(24);
+            margin-block: 0;
+
+        }
+
+        &__description {
+            color: var(--gray-dark);
+            font-size: f.rem(14);  
+            line-height: f.rem(24);
+            font-weight: 400; 
+            margin-block: 0;
+        }
+
+        
+    }
+}

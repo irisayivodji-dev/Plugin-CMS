@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails de l'article - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <div class="dashboard__header">
+            <a href="/admin/articles" class="dashboard__back">Retour à la liste</a>
+            <h1 class="dashboard__title">Détails de l'article</h1>
+        </div>
+        <div class="dashboard__content">
+            <?php if (isset($flash_success) && $flash_success): ?>
+                <div class="users__alert users__alert--success">
+                    <?= htmlspecialchars($flash_success) ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (isset($flash_error) && $flash_error): ?>
+                <div class="users__alert users__alert--error">
+                    <?= htmlspecialchars($flash_error) ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="article-detail">
+                <div class="article-detail__header">
+                    <div class="article-detail__title-section">
+                        <h2 class="article-detail__title"><?= htmlspecialchars($article->title) ?></h2>
+                        <span class="article-detail__status article-detail__status--<?= htmlspecialchars($article->status) ?>">
+                            <?php
+                            $statusLabels = [
+                                'draft' => 'Brouillon',
+                                'published' => 'Publié',
+                                'archived' => 'Archivé'
+                            ];
+                            echo htmlspecialchars($statusLabels[$article->status] ?? $article->status);
+                            ?>
+                        </span>
+                    </div>
+                    
+                    <?php if ($canEdit): ?>
+                        <div class="article-detail__actions">
+                            <a href="/admin/articles/edit/<?= htmlspecialchars($article->id) ?>" class="button button--indigo">
+                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                                Modifier
+                            </a>
+                            
+                            <?php if ($canPublish && $article->status === 'draft'): ?>
+                                <form action="/admin/articles/publish/<?= htmlspecialchars($article->id) ?>" method="POST" style="display: inline;">
+                                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\App\Lib\Auth\CsrfToken::generate()) ?>">
+                                    <button type="submit" class="button button--green">
+                                        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                        Publier
+                                    </button>
+                                </form>
+                            <?php endif; ?>
+                            
+                            <?php if ($canDelete): ?>
+                                <a href="/admin/articles/delete/<?= htmlspecialchars($article->id) ?>" class="button button--red">
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    Supprimer
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="article-detail__content">
+                    <div class="article-detail__main">
+                        <?php if ($featuredMedia): ?>
+                            <div class="article-detail__featured-image">
+                                <img src="/uploads/<?= htmlspecialchars($featuredMedia->file_path) ?>" alt="<?= htmlspecialchars($featuredMedia->alt_text ?? $article->title) ?>" class="article-detail__image">
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($article->excerpt): ?>
+                            <div class="article-detail__excerpt">
+                                <p><?= nl2br(htmlspecialchars($article->excerpt)) ?></p>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($article->content): ?>
+                            <div class="article-detail__body">
+                                <?= $article->content ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($media)): ?>
+                            <div class="article-detail__media">
+                                <h3 class="article-detail__section-title">Médias associés</h3>
+                                <div class="article-detail__media-grid">
+                                    <?php foreach ($media as $item): ?>
+                                        <?php if ($item->file_type === 'image'): ?>
+                                            <div class="article-detail__media-item">
+                                                <img src="/uploads/<?= htmlspecialchars($item->file_path) ?>" alt="<?= htmlspecialchars($item->alt_text ?? $item->filename) ?>" class="article-detail__media-image">
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="article-detail__sidebar">
+                        <div class="article-detail__info-card">
+                            <h3 class="article-detail__info-title">Informations</h3>
+                            <dl class="article-detail__info-list">
+                                <dt>Auteur</dt>
+                                <dd><?= htmlspecialchars($author->firstname ?? $author->email ?? 'Inconnu') ?></dd>
+                                
+                                <dt>Date de création</dt>
+                                <dd><?= date('d/m/Y à H:i', strtotime($article->created_at)) ?></dd>
+                                
+                                <?php if ($article->published_at): ?>
+                                    <dt>Date de publication</dt>
+                                    <dd><?= date('d/m/Y à H:i', strtotime($article->published_at)) ?></dd>
+                                <?php endif; ?>
+                                
+                                <dt>Dernière modification</dt>
+                                <dd><?= date('d/m/Y à H:i', strtotime($article->updated_at)) ?></dd>
+                            </dl>
+                        </div>
+
+                        <?php if (!empty($categories)): ?>
+                            <div class="article-detail__info-card">
+                                <h3 class="article-detail__info-title">Catégories</h3>
+                                <div class="article-detail__tags">
+                                    <?php foreach ($categories as $category): ?>
+                                        <span class="article-detail__tag"><?= htmlspecialchars($category->name) ?></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($tags)): ?>
+                            <div class="article-detail__info-card">
+                                <h3 class="article-detail__info-title">Tags</h3>
+                                <div class="article-detail__tags">
+                                    <?php foreach ($tags as $tag): ?>
+                                        <span class="article-detail__tag"><?= htmlspecialchars($tag->name) ?></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

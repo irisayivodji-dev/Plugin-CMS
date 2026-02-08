@@ -1,0 +1,239 @@
+@use '../partials/functions' as f;
+@use '../partials/mixins' as m;
+
+.sidebar {
+  width: f.rem(250);
+  height: 100vh;
+  background: var(--indigo);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+
+  &__user {
+    padding: f.rem(24) f.rem(24);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    
+    &-name {
+      margin: 0 0 f.rem(4) 0;
+      font-size: f.rem(16);
+      font-weight: 600;
+      color: var(--white);
+    }
+    
+    &-role {
+      margin: 0;
+      font-size: f.rem(12);
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  nav {
+    flex: 1;
+    padding: f.rem(24) 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: f.rem(8);
+    
+    // Style pour la scrollbar
+    &::-webkit-scrollbar {
+      width: f.rem(6);
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: f.rem(3);
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+
+    li {
+      margin: 0;
+      padding: 0 f.rem(16);
+      margin-bottom: f.rem(4);
+      flex-shrink: 0;
+
+      &:last-child {
+        margin-top: auto;
+        padding-top: f.rem(24);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        position: sticky;
+        bottom: 0;
+        background: var(--indigo);
+        z-index: 1;
+      }
+    }
+
+    a {
+      @include m.flex-start;
+      padding: f.rem(12) f.rem(16);
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      border-radius: f.rem(8);
+      font-size: f.rem(14);
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+        transform: translateX(f.rem(4));
+      }
+
+      &:active {
+        transform: translateX(f.rem(2));
+      }
+
+      // Style pour l'élément actif (peut être ajouté via JavaScript)
+      &.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: var(--white);
+        font-weight: 600;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: f.rem(4);
+          height: 60%;
+          background: var(--white);
+          border-radius: 0 f.rem(2) f.rem(2) 0;
+        }
+      }
+    }
+  }
+
+  // Style spécial pour le lien de déconnexion
+  &-menu li:last-child a {
+    display:flex;
+    align-items: center;
+    justify-content:space-between;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    font-weight: 600;
+
+    &:hover {
+      background: var(--red-500);
+      color: var(--white);
+    }
+  }
+}
+
+// Overlay pour mobile
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  transition: opacity 0.3s ease;
+
+  &.is-active {
+    display: block;
+  }
+}
+
+// Bouton hamburger
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: f.rem(20);
+  right: f.rem(20);
+  z-index: 1;
+  padding: f.rem(8);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  svg {
+    display: block;
+    width: f.rem(24);
+    height: f.rem(24);
+    stroke: var(--gray);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  body.sidebar-open {
+    overflow: hidden;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    height: 100vh;
+    width: f.rem(250);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &.is-open {
+      transform: translateX(0);
+
+      ~ .dashboard__container {
+        margin-left: 0;
+      }
+    }
+
+    ~ .dashboard__container {
+      transition: margin-left 0.3s ease;
+    }
+
+    &-menu {
+      a {
+        font-size: f.rem(14);
+        padding: f.rem(12) f.rem(16);
+      }
+    }
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+
+  .sidebar-overlay.is-active {
+    display: block;
+  }
+}

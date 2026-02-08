@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer une catégorie - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <a href="/admin/categories" class="dashboard__back">Retour à la liste</a>
+        <div class="dashboard__header">
+            <h1 class="dashboard__title">Nouvelle catégorie</h1>
+        </div>
+        <div class="dashboard__content">
+            <form method="POST" action="/admin/categories/create" class="users__form">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                
+                <?php if (isset($errors['csrf'])): ?>
+                    <div class="users__alert users__alert--error">
+                        <?= htmlspecialchars($errors['csrf']) ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="users__form-group">
+                    <label for="name" class="users__label">Nom <span class="users__required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        class="users__input <?= isset($errors['name']) ? 'users__input--error' : '' ?>"
+                        value="<?= htmlspecialchars($old['name'] ?? '') ?>"
+                        required
+                    >
+                    <?php if (isset($errors['name'])): ?>
+                        <span class="users__error"><?= htmlspecialchars($errors['name']) ?></span>
+                    <?php endif; ?>
+                </div>
+                <div class="users__form-group">
+                    <label for="description" class="users__label">Description <span class="users__required">*</span></label>
+                    <textarea 
+                        id="description" 
+                        name="description" 
+                        class="users__input <?= isset($errors['description']) ? 'users__input--error' : '' ?>"
+                        rows="5"
+                        maxlength="1000"
+                        required
+                    ><?= htmlspecialchars($old['description'] ?? '') ?></textarea>
+                    <?php if (isset($errors['description'])): ?>
+                        <span class="users__error"><?= htmlspecialchars($errors['description']) ?></span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="users__form-actions">
+                    <button type="submit" class="button button--indigo">
+                        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 10H19C21 10 22 9 22 7V5C22 3 21 2 19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10Z" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19C2 21 3 22 5 22Z" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6 10C8.20914 10 10 8.20914 10 6C10 3.79086 8.20914 2 6 2C3.79086 2 2 3.79086 2 6C2 8.20914 3.79086 10 6 10Z" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M18 22C20.2091 22 22 20.2091 22 18C22 15.7909 20.2091 14 18 14C15.7909 14 14 15.7909 14 18C14 20.2091 15.7909 22 18 22Z" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        Créer la catégorie</button>
+                    <a href="/admin/categories" class="button button--secondary">
+                        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                        Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un Article - Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/css/main.css">
+</head>
+<body class="dashboard">
+    <?php require __DIR__ . '/../../components/sidebar.html'; ?>
+    <div class="dashboard__container">
+        <a href="/admin/articles" class="dashboard__back">Retour à la liste</a>
+        <div class="dashboard__header">
+            <h1 class="dashboard__title">Nouvel Article</h1>
+        </div>
+        <div class="dashboard__content dashboard__content--full">
+            <form method="POST" action="/admin/articles/create" class="users__form users__form--two-columns">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                
+                <?php if (isset($errors['csrf'])): ?>
+                    <div class="users__alert users__alert--error">
+                        <?= htmlspecialchars($errors['csrf']) ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="users__form-main">
+                    <div class="users__form-group">
+                        <label for="title" class="users__label">Titre <span class="users__required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="title" 
+                            name="title" 
+                            class="users__input <?= isset($errors['title']) ? 'users__input--error' : '' ?>"
+                            value="<?= htmlspecialchars($old['title'] ?? '') ?>"
+                            required
+                        >
+                        <?php if (isset($errors['title'])): ?>
+                            <span class="users__error"><?= htmlspecialchars($errors['title']) ?></span>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="users__form-group">
+                        <label for="content" class="users__label">Contenu</label>
+                        <div class="wysiwyg-editor">
+                            <div class="wysiwyg-editor__toolbar">
+                                <button type="button" class="wysiwyg-editor__btn" data-command="bold" title="Gras">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
+                                </button>
+                                <button type="button" class="wysiwyg-editor__btn" data-command="italic" title="Italique">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="4" x2="10" y2="4"></line><line x1="14" y1="20" x2="5" y2="20"></line><line x1="15" y1="4" x2="9" y2="20"></line></svg>
+                                </button>
+                                <button type="button" class="wysiwyg-editor__btn" data-command="underline" title="Souligné">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"></path><line x1="4" y1="21" x2="20" y2="21"></line></svg>
+                                </button>
+                                <div class="wysiwyg-editor__separator"></div>
+                                <select class="wysiwyg-editor__format-select" title="Format">
+                                    <option value="p">Paragraphe</option>
+                                    <option value="h1">Titre 1</option>
+                                    <option value="h2">Titre 2</option>
+                                    <option value="h3">Titre 3</option>
+                                </select>
+                                <div class="wysiwyg-editor__separator"></div>
+                                <button type="button" class="wysiwyg-editor__btn" data-command="createLink" title="Lien">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                </button>
+                            </div>
+                            <div 
+                                id="content-editor" 
+                                class="wysiwyg-editor__content <?= isset($errors['content']) ? 'wysiwyg-editor__content--error' : '' ?>"
+                                contenteditable="true"
+                                data-placeholder="Saisissez le contenu de l'article..."
+                            ><?= $old['content'] ?? '' ?></div>
+                            <textarea 
+                                id="content" 
+                                name="content" 
+                                style="display: none;"
+                            ><?= htmlspecialchars($old['content'] ?? '') ?></textarea>
+                        </div>
+                        <?php if (isset($errors['content'])): ?>
+                            <span class="users__error"><?= htmlspecialchars($errors['content']) ?></span>
+                        <?php endif; ?>
+                        <small class="users__help">Le contenu est requis uniquement si l'article est publié</small>
+                    </div>
+
+                    <div class="users__form-actions">
+                        <button type="submit" class="button button--indigo">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15 8H17M15 12H17M17 16H7M7 8V12H11V8H7ZM5 20H19C20.1046 20 21 19.1046 21 18V6C21 4.89543 20.1046 4 19 4H5C3.89543 4 3 4.89543 3 6V18C3 19.1046 3.89543 20 5 20Z" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></g></svg>                        
+                            Créer l'article</button>
+                        <a href="/admin/articles" class="button button--secondary">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                            Annuler</a>
+                    </div>
+                </div>
+
+                <div class="users__form-sidebar">
+                    <div class="users__form-group">
+                        <label for="categories-input" class="users__label">Catégories</label>
+                        <div class="custom-select" id="categories-select">
+                            <div class="custom-select__input-wrapper">
+                                <div class="custom-select__tags" id="categories-tags"></div>
+                                <input 
+                                    type="text" 
+                                    id="categories-input" 
+                                    class="custom-select__input users__input"
+                                    placeholder="Rechercher ou sélectionner une catégorie..."
+                                    autocomplete="off"
+                                >
+                                <div class="custom-select__dropdown" id="categories-dropdown">
+                                    <!-- Les options apparaîtront ici -->
+                                </div>
+                            </div>
+                        </div>
+                        <small class="users__help">Sélectionnez une ou plusieurs catégories</small>
+                    </div>
+
+                <div class="users__form-group">
+                    <label for="tags_input" class="users__label">Tags</label>
+                    <input 
+                        type="text" 
+                        id="tags_input" 
+                        name="tags_input" 
+                        class="users__input"
+                        value="<?= htmlspecialchars($old['tags_input'] ?? '') ?>"
+                        placeholder="Saisissez les tags séparés par des virgules (ex: PHP, JavaScript, Web)"
+                        autocomplete="off"
+                        data-existing-tags="<?= htmlspecialchars(json_encode($tagsArray ?? []), ENT_QUOTES, 'UTF-8') ?>"
+                    >
+                    <input type="hidden" id="tags" name="tags" value="">
+                    <small class="users__help">Saisissez les tags séparés par des virgules. Les tags seront créés automatiquement s'ils n'existent pas.</small>
+                    <div id="tags_suggestions" class="tags__suggestions"></div>
+                </div>
+
+                <div class="users__form-group">
+                    <label for="excerpt" class="users__label">Résumé</label>
+                    <textarea 
+                        id="excerpt" 
+                        name="excerpt" 
+                        class="users__input"
+                        rows="4"
+                    ><?= htmlspecialchars($old['excerpt'] ?? '') ?></textarea>
+                    <small class="users__help">Résumé court de l'article (optionnel)</small>
+                </div>
+
+                <div class="users__form-group">
+                    <label class="users__label">Image à la une</label>
+                    <div id="featured-image-preview" class="media-selector__preview" style="display: none;">
+                        <img id="featured-image-preview-img" src="" alt="Aperçu" class="media-selector__preview-img">
+                        <button type="button" id="remove-featured-image" class="media-selector__remove" title="Retirer l'image">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <button type="button" id="open-media-library" class="button button--secondary" style="width: 100%;">
+                        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 16L8.586 11.414C8.96112 11.0391 9.46967 10.8284 10 10.8284C10.5303 10.8284 11.0389 11.0391 11.414 11.414L16 16M14 14L15.586 12.414C15.9611 12.0391 16.4697 11.8284 17 11.8284C17.5303 11.8284 18.0389 12.0391 18.414 12.414L20 14M14 8H14.01M6 20H18C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4H6C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        Choisir une image
+                    </button>
+                    <input type="hidden" id="featured_media_id" name="featured_media_id" value="<?= htmlspecialchars($old['featured_media_id'] ?? '') ?>">
+                    <input type="hidden" id="media_ids" name="media_ids[]" value="">
+                    <small class="users__help">Sélectionnez une image à la une pour l'article (optionnel)</small>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Médiathèque -->
+    <div id="media-library-modal" class="media-library-modal" style="display: none;">
+        <div class="media-library-modal__overlay"></div>
+        <div class="media-library-modal__content">
+            <div class="media-library-modal__header">
+                <h2 class="media-library-modal__title">Sélectionner une image</h2>
+                <button type="button" id="close-media-library" class="media-library-modal__close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="media-library-modal__body">
+                <?php if (empty($media)): ?>
+                    <p class="media-library-modal__empty">Aucun média disponible. <a href="/admin/media/upload">Uploader un média</a></p>
+                <?php else: ?>
+                    <div class="media-library-modal__grid">
+                        <?php foreach ($media as $item): ?>
+                            <?php if ($item->file_type === 'image'): ?>
+                                <div class="media-library-modal__item" data-media-id="<?= htmlspecialchars($item->id) ?>" data-media-url="/uploads/<?= htmlspecialchars($item->file_path) ?>">
+                                    <img src="/uploads/<?= htmlspecialchars($item->file_path) ?>" alt="<?= htmlspecialchars($item->alt_text ?? $item->filename) ?>" class="media-library-modal__preview">
+                                    <div class="media-library-modal__overlay-item">
+                                        <span class="media-library-modal__select">Sélectionner</span>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/json" id="media-data">
+<?php
+$mediaArray = [];
+foreach ($media ?? [] as $item) {
+    if ($item->file_type === 'image') {
+        $mediaArray[] = [
+            'id' => $item->id,
+            'url' => '/uploads/' . $item->file_path,
+            'filename' => $item->filename,
+            'alt_text' => $item->alt_text ?? ''
+        ];
+    }
+}
+echo json_encode($mediaArray, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+?>
+    </script>
+    <?php
+    // Préparer les catégories pour JavaScript
+    $categoriesArray = [];
+    $selectedCategories = [];
+    if (isset($categories) && is_array($categories)) {
+        foreach ($categories as $category) {
+            $categoriesArray[] = [
+                'id' => $category->id,
+                'name' => $category->name
+            ];
+        }
+    }
+    if (isset($old['categories']) && is_array($old['categories'])) {
+        $selectedCategories = $old['categories'];
+    }
+    
+    // Préparer les tags pour JavaScript
+    $tagsArray = [];
+    if (isset($tags) && is_array($tags)) {
+        foreach ($tags as $tag) {
+            if (isset($tag->name)) {
+                $tagsArray[] = $tag->name;
+            }
+        }
+    }
+    ?>
+    <script id="categories-data" type="application/json">
+        <?= json_encode([
+            'categories' => $categoriesArray,
+            'selected' => $selectedCategories
+        ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>
+    </script>
+    <script>
+        // Récupérer les données depuis le script JSON
+        const categoriesDataScript = document.getElementById('categories-data');
+        const categoriesData = categoriesDataScript ? JSON.parse(categoriesDataScript.textContent) : { categories: [], selected: [] };
+        const availableCategories = categoriesData.categories || [];
+        const selectedCategoryIds = categoriesData.selected || [];
+        
+        // Initialiser le custom select pour les catégories
+        (function() {
+            const categoriesSelect = document.getElementById('categories-select');
+            const categoriesTags = document.getElementById('categories-tags');
+            const categoriesInput = document.getElementById('categories-input');
+            const categoriesDropdown = document.getElementById('categories-dropdown');
+            
+            if (!categoriesSelect || !categoriesTags || !categoriesInput || !categoriesDropdown) return;
+            
+            let selectedCategories = [];
+            
+            // Initialiser avec les catégories pré-sélectionnées
+            if (selectedCategoryIds && selectedCategoryIds.length > 0) {
+                selectedCategoryIds.forEach(catId => {
+                    const category = availableCategories.find(c => c.id == catId);
+                    if (category) {
+                        selectedCategories.push(category);
+                    }
+                });
+                updateCategoriesDisplay();
+            }
+            
+            // Fonction pour mettre à jour l'affichage des tags
+            function updateCategoriesDisplay() {
+                categoriesTags.innerHTML = '';
+                
+                selectedCategories.forEach(category => {
+                    const tag = document.createElement('div');
+                    tag.className = 'custom-select__tag';
+                    tag.innerHTML = `
+                        <span>${escapeHtml(category.name)}</span>
+                        <button type="button" class="custom-select__tag-remove" data-id="${category.id}">×</button>
+                    `;
+                    categoriesTags.appendChild(tag);
+                });
+                
+                // Mettre à jour les champs hidden
+                const existingHidden = categoriesSelect.querySelectorAll('input[name="categories[]"]');
+                existingHidden.forEach(input => input.remove());
+                
+                selectedCategories.forEach(category => {
+                    const hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = 'categories[]';
+                    hidden.value = category.id;
+                    categoriesSelect.appendChild(hidden);
+                });
+            }
+            
+            // Fonction pour échapper le HTML
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+            
+            // Fonction pour filtrer et afficher les options
+            function filterCategories(searchTerm = '') {
+                const term = searchTerm.toLowerCase().trim();
+                const filtered = availableCategories.filter(cat => {
+                    const isSelected = selectedCategories.some(selected => selected.id === cat.id);
+                    const matches = term === '' || cat.name.toLowerCase().includes(term);
+                    return matches && !isSelected;
+                });
+                
+                categoriesDropdown.innerHTML = '';
+                
+                if (filtered.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = 'custom-select__empty';
+                    empty.textContent = term ? 'Aucune catégorie trouvée' : 'Toutes les catégories sont sélectionnées';
+                    categoriesDropdown.appendChild(empty);
+                } else {
+                    filtered.forEach(category => {
+                        const option = document.createElement('div');
+                        option.className = 'custom-select__option';
+                        option.textContent = category.name;
+                        option.addEventListener('click', () => {
+                            selectedCategories.push(category);
+                            updateCategoriesDisplay();
+                            categoriesInput.value = '';
+                            categoriesDropdown.classList.remove('custom-select__dropdown--open');
+                        });
+                        categoriesDropdown.appendChild(option);
+                    });
+                }
+            }
+            
+            // Écouter les clics sur les boutons de suppression
+            categoriesTags.addEventListener('click', (e) => {
+                if (e.target.classList.contains('custom-select__tag-remove')) {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    selectedCategories = selectedCategories.filter(cat => cat.id !== id);
+                    updateCategoriesDisplay();
+                    filterCategories(categoriesInput.value);
+                }
+            });
+            
+            // Écouter les changements dans l'input
+            categoriesInput.addEventListener('input', (e) => {
+                filterCategories(e.target.value);
+                categoriesDropdown.classList.add('custom-select__dropdown--open');
+            });
+            
+            // Ouvrir le dropdown au focus
+            categoriesInput.addEventListener('focus', () => {
+                filterCategories(categoriesInput.value);
+                categoriesDropdown.classList.add('custom-select__dropdown--open');
+            });
+            
+            // Fermer le dropdown en cliquant ailleurs
+            document.addEventListener('click', (e) => {
+                if (!categoriesSelect.contains(e.target)) {
+                    categoriesDropdown.classList.remove('custom-select__dropdown--open');
+                }
+            });
+            
+            // Initialiser l'affichage
+            filterCategories();
+        })();
+        
+        // Gestion des tags
+        (function() {
+            const tagsInput = document.getElementById('tags_input');
+            const tagsSuggestions = document.getElementById('tags_suggestions');
+            const hiddenTagsInput = document.getElementById('tags');
+            
+            if (!tagsInput || !tagsSuggestions) return;
+            
+            // Récupérer les tags existants depuis l'attribut data
+            const existingTagsData = tagsInput.getAttribute('data-existing-tags');
+            let existingTags = [];
+            try {
+                if (existingTagsData && existingTagsData.trim() !== '') {
+                    existingTags = JSON.parse(existingTagsData);
+                }
+            } catch (e) {
+                console.error('Erreur parsing existing tags:', e, 'Data:', existingTagsData);
+                existingTags = [];
+            }
+            
+            let currentTags = [];
+            
+            // Fonction pour mettre à jour les suggestions
+            function updateSuggestions(value) {
+                tagsSuggestions.innerHTML = '';
+                
+                if (!value || value.trim() === '') {
+                    return;
+                }
+                
+                // Récupérer le dernier tag en cours de saisie (après la dernière virgule)
+                const parts = value.split(',');
+                const currentTag = parts[parts.length - 1].trim().toLowerCase();
+                
+                if (currentTag.length < 2) {
+                    return;
+                }
+                
+                // Filtrer les tags existants qui correspondent
+                const matches = existingTags.filter(tag => 
+                    tag.toLowerCase().includes(currentTag) && 
+                    !currentTags.includes(tag)
+                ).slice(0, 5);
+                
+                if (matches.length > 0) {
+                    const suggestionsList = document.createElement('div');
+                    suggestionsList.className = 'tags__suggestions-list';
+                    
+                    matches.forEach(tag => {
+                        const suggestion = document.createElement('div');
+                        suggestion.className = 'tags__suggestion-item';
+                        suggestion.textContent = tag;
+                        suggestion.addEventListener('click', function() {
+                            addTag(tag);
+                        });
+                        suggestionsList.appendChild(suggestion);
+                    });
+                    
+                    tagsSuggestions.appendChild(suggestionsList);
+                }
+            }
+            
+            // Fonction pour ajouter un tag
+            function addTag(tagName) {
+                if (!currentTags.includes(tagName)) {
+                    currentTags.push(tagName);
+                    updateTagsInput();
+                }
+            }
+            
+            // Fonction pour mettre à jour le champ input
+            function updateTagsInput() {
+                tagsInput.value = currentTags.join(', ');
+                hiddenTagsInput.value = currentTags.join(',');
+            }
+            
+            // Écouter les changements dans le champ
+            tagsInput.addEventListener('input', function(e) {
+                const value = e.target.value;
+                const tags = value.split(',').map(t => t.trim()).filter(t => t !== '');
+                currentTags = tags;
+                updateTagsInput();
+                updateSuggestions(value);
+            });
+            
+            // Écouter les touches pour valider avec Entrée
+            tagsInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const value = e.target.value.trim();
+                    if (value) {
+                        const parts = value.split(',');
+                        const lastTag = parts[parts.length - 1].trim();
+                        if (lastTag && !currentTags.includes(lastTag)) {
+                            currentTags.push(lastTag);
+                            updateTagsInput();
+                            tagsSuggestions.innerHTML = '';
+                        }
+                    }
+                }
+            });
+            
+            // Fermer les suggestions en cliquant ailleurs
+            document.addEventListener('click', function(e) {
+                if (!tagsInput.contains(e.target) && !tagsSuggestions.contains(e.target)) {
+                    tagsSuggestions.innerHTML = '';
+                }
+            });
+            
+            // Initialiser avec les valeurs existantes si présentes
+            const initialValue = tagsInput.value;
+            if (initialValue) {
+                currentTags = initialValue.split(',').map(t => t.trim()).filter(t => t !== '');
+                updateTagsInput();
+            }
+        })();
+        
+        // Initialiser l'éditeur WYSIWYG
+        (function() {
+            const editor = document.getElementById('content-editor');
+            const textarea = document.getElementById('content');
+            const toolbar = document.querySelector('.wysiwyg-editor__toolbar');
+            const formatSelect = document.querySelector('.wysiwyg-editor__format-select');
+            
+            if (!editor || !textarea || !toolbar) return;
+            
+            // Gérer le select de format
+            if (formatSelect) {
+                formatSelect.addEventListener('change', function(e) {
+                    editor.focus();
+                    const format = e.target.value;
+                    document.execCommand('formatBlock', false, format);
+                    updateTextarea();
+                    // Réinitialiser le select
+                    e.target.value = 'p';
+                });
+            }
+            
+            // Gérer les boutons de la barre d'outils
+            toolbar.addEventListener('click', function(e) {
+                const btn = e.target.closest('.wysiwyg-editor__btn');
+                if (!btn) return;
+                
+                e.preventDefault();
+                const command = btn.getAttribute('data-command');
+                const value = btn.getAttribute('data-value');
+                
+                // Garder le focus sur l'éditeur
+                editor.focus();
+                
+                if (command === 'createLink') {
+                    const url = prompt('Entrez l\'URL du lien:');
+                    if (url) {
+                        document.execCommand('createLink', false, url);
+                    }
+                } else if (value) {
+                    document.execCommand(command, false, value);
+                } else {
+                    document.execCommand(command, false, null);
+                }
+                
+                // Mettre à jour le textarea
+                updateTextarea();
+            });
+            
+            // Mettre à jour le textarea à chaque modification
+            editor.addEventListener('input', updateTextarea);
+            editor.addEventListener('paste', function(e) {
+                // Attendre que le contenu soit collé
+                setTimeout(updateTextarea, 0);
+            });
+            
+            // Fonction pour mettre à jour le textarea avec le HTML
+            function updateTextarea() {
+                textarea.value = editor.innerHTML;
+            }
+            
+            // Initialiser avec le contenu existant
+            if (textarea.value) {
+                editor.innerHTML = textarea.value;
+            }
+        })();
+
+        // Gestion de la médiathèque
+        (function() {
+            const openMediaLibraryBtn = document.getElementById('open-media-library');
+            const closeMediaLibraryBtn = document.getElementById('close-media-library');
+            const mediaLibraryModal = document.getElementById('media-library-modal');
+            const featuredImagePreview = document.getElementById('featured-image-preview');
+            const featuredImagePreviewImg = document.getElementById('featured-image-preview-img');
+            const removeFeaturedImageBtn = document.getElementById('remove-featured-image');
+            const featuredMediaIdInput = document.getElementById('featured_media_id');
+            const mediaIdsInput = document.getElementById('media_ids');
+            const mediaDataScript = document.getElementById('media-data');
+            
+            if (!openMediaLibraryBtn || !mediaLibraryModal) return;
+            
+            let mediaData = [];
+            try {
+                if (mediaDataScript && mediaDataScript.textContent) {
+                    mediaData = JSON.parse(mediaDataScript.textContent);
+                }
+            } catch (e) {
+                console.error('Erreur parsing media data:', e);
+            }
+            
+            // Ouvrir le modal
+            openMediaLibraryBtn.addEventListener('click', function() {
+                mediaLibraryModal.style.display = 'flex';
+            });
+            
+            // Fermer le modal
+            closeMediaLibraryBtn.addEventListener('click', function() {
+                mediaLibraryModal.style.display = 'none';
+            });
+            
+            // Fermer en cliquant sur l'overlay
+            mediaLibraryModal.querySelector('.media-library-modal__overlay').addEventListener('click', function() {
+                mediaLibraryModal.style.display = 'none';
+            });
+            
+            // Sélectionner un média
+            const mediaItems = mediaLibraryModal.querySelectorAll('.media-library-modal__item');
+            mediaItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const mediaId = this.getAttribute('data-media-id');
+                    const mediaUrl = this.getAttribute('data-media-url');
+                    
+                    // Mettre à jour l'input hidden
+                    featuredMediaIdInput.value = mediaId;
+                    
+                    // Afficher l'aperçu
+                    featuredImagePreviewImg.src = mediaUrl;
+                    featuredImagePreview.style.display = 'block';
+                    
+                    // Masquer le bouton "Choisir une image"
+                    openMediaLibraryBtn.style.display = 'none';
+                    
+                    // Fermer le modal
+                    mediaLibraryModal.style.display = 'none';
+                });
+            });
+            
+            // Retirer l'image
+            if (removeFeaturedImageBtn) {
+                removeFeaturedImageBtn.addEventListener('click', function() {
+                    featuredMediaIdInput.value = '';
+                    if (mediaIdsInput) {
+                        mediaIdsInput.value = '';
+                    }
+                    featuredImagePreview.style.display = 'none';
+                    openMediaLibraryBtn.style.display = 'block';
+                });
+            }
+            
+            // Afficher l'aperçu si une image est déjà sélectionnée
+            if (featuredMediaIdInput.value) {
+                const selectedMedia = mediaData.find(m => m.id == featuredMediaIdInput.value);
+                if (selectedMedia) {
+                    featuredImagePreviewImg.src = selectedMedia.url;
+                    featuredImagePreview.style.display = 'block';
+                    openMediaLibraryBtn.style.display = 'none';
+                }
+            }
+        })();
+</script>
+</body>
+</html>
